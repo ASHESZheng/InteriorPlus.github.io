@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+	<html>
+	<head>
+		<title>{$site_seo_title} {$site_name}</title>
+		<meta name="keywords" content="{$site_seo_keywords}" />
+		<meta name="description" content="{$site_seo_description}">
+		<tc_include file="Public:head" />
+		<link href="__TMPL__Public/assets/css/slippry/slippry.css" rel="stylesheet">
+		<!---css--->
+		<link href="__TMPL__Public/plus/css/bootstrap.css" rel='stylesheet' type='text/css' />
+		<link href="__TMPL__Public/plus/css/style.css" rel='stylesheet' type='text/css' />
+		<!---css--->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="keywords" content="Interior Plus  Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony Ericsson, Motorola web design" />
+		<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+		<!---js--->
+		<script src="__TMPL__Public/plus/js/jquery-1.11.1.min.js"></script>
+		<script src="__TMPL__Public/plus/js/bootstrap.js"></script>
+		<!---js--->
+		<link href="__TMPL__Public/plus/css/styles.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="__TMPL__Public/plus/css/component.css" />
+		<!--web-fonts-->
+		<link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+		<link href='//fonts.googleapis.com/css?family=Josefin+Sans:400,700italic,700,600italic,600,400italic,300italic,300,100italic,100' rel='stylesheet' type='text/css'>
+		<!--//web-fonts-->
+		<script type="text/javascript" src="__TMPL__Public/plus/js/numscroller-1.0.js"></script>
+		<!--JS for animate-->
+		<link href="__TMPL__Public/plus/css/animate.css" rel="stylesheet" type="text/css" media="all">
+		<script src="__TMPL__Public/plus/js/wow.min.js"></script>
+		<script>
+			new WOW().init();
+		</script>
+		<!--//end-animate-->
+
+	</head>
+	<body>
+	<tc_include file="Public:nav-server" />
+	<!--header-->
+	<div class="content">
+		<php>
+			$topposts=sp_sql_posts("cid:$cat_id;field:smeta;order:istop desc,listorder desc;limit:1;where:recommended=1");//获取当前分类的推荐文章
+			$recommend = sp_sql_posts_paged("cid:$cat_id;order:istop desc,post_modified desc;",array('istop'=>1));//获取当前分类置顶文章
+			$lists=sp_sql_posts_paged("cid:$cat_id;order:post_date DESC;where:istop=0 and recommended=0;");//获取当前分类除却置顶与推荐之外的文章
+		</php>
+		<div class="service-section">
+			<div class="container">
+				<!--获取当前分类名称-->
+				<h2>{:sp_get_term($cat_id)['name']}</h2>
+
+				<div class="service-grids">
+					<foreach name="topposts" item="vo" ><!--调出分类置顶文章-->
+						<php>
+							$smeta=json_decode($vo['smeta'], true);
+						</php>
+					<div class="col-md-6 serce-grid wow fadeInLeft animated animated" data-wow-delay="0.4s">
+						<div class="service-img">
+							<!--获取文章缩略图-->
+								<if condition="empty($smeta['thumb'])">
+									<img src="__TMPL__Public/images/default_tupian1.png"  class="img-responsive" alt="{$vo.post_title}"/>
+									<else />
+									<img src="{:sp_get_asset_upload_path($smeta['thumb'])}"  class="img-responsive" alt="{$vo.post_title}"/>
+								</if>
+						</div>
+					</div>
+					</foreach>
+					<div class="col-md-6 serce-grid wow fadeInRight animated animated" data-wow-delay="0.4s">
+						<div class="service-top">
+						<volist name="lists['posts']" id="vo" key="key" offset="0" length='2'><!--获取分类第1，2篇文章-->
+							<php>
+								$smeta=json_decode($vo['smeta'], true);
+							</php>
+							<if condition="$key eq 0">
+								<div  class="col-md-6 service-left">
+								<div class="service-img">
+										<if condition="empty($smeta['thumb'])">
+											<img src="__TMPL__Public/images/default_tupian1.png"  class="img-responsive" alt="{$vo.post_title}"/>
+											<else />
+											<img src="{:sp_get_asset_upload_path($smeta['thumb'])}"  class="img-responsive" alt="{$vo.post_title}"/>
+										</if>
+								</div>
+								<h5>{$vo.post_title}</h5>
+								<p>{$vo.post_content}</p>
+									</div>
+									<else />
+									<div class="col-md-6 service-right">
+							<div class="service-img">
+								<if condition="empty($smeta['thumb'])">
+									<img src="__TMPL__Public/images/default_tupian1.png"  class="img-responsive" alt="{$vo.post_title}"/>
+									<else />
+									<img src="{:sp_get_asset_upload_path($smeta['thumb'])}"  class="img-responsive" alt="{$vo.post_title}"/>
+								</if>
+							</div>
+							<h5>{$vo.post_title}</h5>
+							<p>{$vo.post_content}</p>
+
+						</div>
+							</if>
+						</volist>
+							<div class="clearfix"></div>
+						</div>
+						<div class="service-top1">
+					<volist name="lists['posts']" id="vo" key="key" offset="2" length='2'><!--获取分类文章第3，4篇-->
+						<php>
+							$smeta=json_decode($vo['smeta'], true);
+						</php>
+							<if condition="$key eq 2">
+							<div  class="col-md-6 service-left">
+								<div class="service-img">
+									<if condition="empty($smeta['thumb'])">
+										<img src="__TMPL__Public/images/default_tupian1.png"  class="img-responsive" alt="{$vo.post_title}"/>
+										<else />
+										<img src="{:sp_get_asset_upload_path($smeta['thumb'])}"  class="img-responsive" alt="{$vo.post_title}"/>
+									</if>
+								</div>
+								<h5>{$vo.post_title}</h5>
+								<p>{$vo.post_content}</p>
+							</div>
+							<else />
+						<div class="col-md-6 service-right">
+						<div class="service-img">
+							<if condition="empty($smeta['thumb'])">
+								<img src="__TMPL__Public/images/default_tupian1.png"  class="img-responsive" alt="{$vo.post_title}"/>
+								<else />
+								<img src="{:sp_get_asset_upload_path($smeta['thumb'])}"  class="img-responsive" alt="{$vo.post_title}"/>
+							</if>
+						</div>
+							<h5>{$vo.post_title}</h5>
+							<p>{$vo.post_content}</p>
+						</div>
+								</if>
+					</volist>
+							<div class="clearfix"></div>
+						</div>
+
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<div class="service-grids">
+					<div class="col-md-6 serce-grid wow fadeInLeft animated animated" data-wow-delay="0.4s">
+						<div class="service-top">
+							<volist name="lists['posts']" id="vo" key="key" offset="4" length='2'><!--获取分类文章第5，6篇-->
+								<php>
+									$smeta=json_decode($vo['smeta'], true);
+								</php>
+								<if condition="$key eq 4">
+							<div class="col-md-6 service-left">
+								<div class="service-img">
+									<if condition="empty($smeta['thumb'])">
+										<img src="__TMPL__Public/images/default_tupian1.png"  class="img-responsive" alt="{$vo.post_title}"/>
+										<else />
+										<img src="{:sp_get_asset_upload_path($smeta['thumb'])}"  class="img-responsive" alt="{$vo.post_title}"/>
+									</if>								</div>
+								<h5>{$vo.post_title}</h5>
+								<p>{$vo.post_content}</p>
+							</div>
+									<else />
+							<div class="col-md-6 service-right">
+								<div class="service-img">
+									<if condition="empty($smeta['thumb'])">
+										<img src="__TMPL__Public/images/default_tupian1.png"  class="img-responsive" alt="{$vo.post_title}"/>
+										<else />
+										<img src="{:sp_get_asset_upload_path($smeta['thumb'])}"  class="img-responsive" alt="{$vo.post_title}"/>
+									</if>								</div>
+								<h5>{$vo.post_title}</h5>
+								<p>{$vo.post_content}</p>
+							</div>
+								</if></volist>
+							<div class="clearfix"></div>
+						</div>
+						<div class="service-top1">
+							<volist name="lists['posts']" id="vo" key="key" offset="6" length='2'><!--获取分类文章第7，8篇-->
+								<php>
+									$smeta=json_decode($vo['smeta'], true);
+								</php>
+								<if condition="$key eq 6">
+							<div class="col-md-6 service-left">
+								<div class="service-img">
+									<if condition="empty($smeta['thumb'])">
+										<img src="__TMPL__Public/images/default_tupian1.png"  class="img-responsive" alt="{$vo.post_title}"/>
+										<else />
+										<img src="{:sp_get_asset_upload_path($smeta['thumb'])}"  class="img-responsive" alt="{$vo.post_title}"/>
+									</if>								</div>
+								<h5>{$vo.post_title}</h5>
+								<p>{$vo.post_content}</p>
+							</div>
+									<else />
+							<div class="col-md-6 service-right">
+								<div class="service-img">
+									<if condition="empty($smeta['thumb'])">
+										<img src="__TMPL__Public/images/default_tupian1.png"  class="img-responsive" alt="{$vo.post_title}"/>
+										<else />
+										<img src="{:sp_get_asset_upload_path($smeta['thumb'])}"  class="img-responsive" alt="{$vo.post_title}"/>
+									</if>								</div>
+								<h5>{$vo.post_title}</h5>
+								<p>{$vo.post_content}</p>
+							</div>
+									</if>
+								</volist>
+							<div class="clearfix"></div>
+						</div>
+					</div>
+					<div class="col-md-6 serce-grid wow fadeInRight animated animated" data-wow-delay="0.4s">
+						<div class="service-img">
+							<volist name="recommend['posts']" id="vo"><!--调出分类推荐文章-->
+								<php>
+									$smeta=json_decode($vo['smeta'], true);
+								</php>
+								<if condition="empty($smeta['thumb'])">
+										<img src="__TMPL__Public/images/default_tupian1.png"  alt="{$vo.post_title}"/>
+									<else />
+										<img src="{:sp_get_asset_upload_path($smeta['thumb'])}"  alt="{$vo.post_title}"/>
+								</if>								</volist>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+		</div>
+		<div class="choose-section">
+			<div class="container">
+				<h3>why choose us</h3>
+				<div class="choose-grids">
+					<php>
+						$posts=sp_sql_posts('cid:10;field:post_title,post_content;limit:4;order:listorder asc');
+					</php>
+					<foreach name="posts" item="vo" key="key">
+						<php>
+							$smeta=json_decode($vo['smeta'],true);
+						</php>
+						<if condition="$key eq 2">
+						<foreach name="posts" item="vo" key="key">
+							<php>
+								$smeta=json_decode($vo['smeta'],true);
+							</php>
+					<if condition="$key eq 0">
+						<div class="col-md-3 choose-gd wow fadeInLeft animated animated" data-wow-delay="0.4s">
+						<div class="icon hi-icon-wrap hi-icon-effect-5 hi-icon-effect-5a">
+							<a href="#" class="hi-icon hi-icon-mobile glyphicon glyphicon-user"></a>
+						</div>
+						<h4>{$vo.post_title}</h4>
+							<p>{$vo.post_content}</p>
+					</div>
+						<elseif condition="$key eq 1" />
+					<div class="col-md-3 choose-gd wow fadeInDownBig animated animated" data-wow-delay="0.4s">
+						<div class="icon hi-icon-wrap hi-icon-effect-5 hi-icon-effect-5a">
+							<a href="#" class="hi-icon hi-icon-mobile glyphicon glyphicon-book"></a>
+						</div>
+						<h4>{$vo.post_title}</h4>
+						<p>{$vo.post_content}</p>
+					</div>
+						<elseif condition="$key eq 2"/>
+					<div class="col-md-3 choose-gd wow fadeInUpBig animated animated" data-wow-delay="0.4s">
+						<div class="icon hi-icon-wrap hi-icon-effect-5 hi-icon-effect-5a">
+							<a href="#" class="hi-icon hi-icon-mobile glyphicon glyphicon-asterisk"></a>
+						</div>
+						<h4>{$vo.post_title}</h4>
+						<p>{$vo.post_content}</p>
+					</div>
+						<else/>
+					<div class="col-md-3 choose-gd wow fadeInRight animated animated" data-wow-delay="0.4s">
+						<div class="icon hi-icon-wrap hi-icon-effect-5 hi-icon-effect-5a">
+							<a href="#" class="hi-icon hi-icon-mobile glyphicon glyphicon-zoom-in"></a>
+						</div>
+						<h4>{$vo.post_title}</h4>
+						<p>{$vo.post_content}</p>
+					</div>
+						</if>
+</foreach>			</if>			</foreach>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<tc_include file="Public:footer"/>
+	<tc_include file="Public:scripts"/>
+	</body>
+</html>

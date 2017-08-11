@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+	<html>
+	<head>
+		<title>{$site_seo_title} {$site_name}</title>
+		<meta name="keywords" content="{$site_seo_keywords}" />
+		<meta name="description" content="{$site_seo_description}">
+		<tc_include file="Public:head" />
+		<link href="__TMPL__Public/assets/css/slippry/slippry.css" rel="stylesheet">
+		<!---css--->
+		<link href="__TMPL__Public/plus/css/bootstrap.css" rel='stylesheet' type='text/css' />
+		<link href="__TMPL__Public/plus/css/style.css" rel='stylesheet' type='text/css' />
+		<!---css--->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="keywords" content="Interior Plus  Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony Ericsson, Motorola web design" />
+		<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+		<!---js--->
+		<script src="__TMPL__Public/plus/js/jquery-1.11.1.min.js"></script>
+		<script src="__TMPL__Public/plus/js/bootstrap.js"></script>
+		<!---js--->
+		<link href="__TMPL__Public/plus/css/styles.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="__TMPL__Public/plus/css/component.css" />
+		<script type="text/javascript" src="__TMPL__Public/plus/js/numscroller-1.0.js"></script>
+		<!--JS for animate-->
+		<link href="__TMPL__Public/plus/css/animate.css" rel="stylesheet" type="text/css" media="all">
+		<script src="__TMPL__Public/plus/js/wow.min.js"></script>
+		<script>
+			new WOW().init();
+		</script>
+		<!--//end-animate-->
+
+	</head>
+<body >
+
+<tc_include file="Public:nav" />
+<!--header--->
+<div class="content">
+	<div class="welcome-section">
+		<div class="container">
+			<php>
+				$term_id=5;
+				$posts=sp_sql_posts('cid:5;field:post_title,post_content,smeta ;limit:3;order:listorder asc');//获取分类文章，不作分页
+				$tag="ids:$term_id;field:term_id,name,description;where:term_id>0;";
+				$terms=sp_get_terms($tag);//获取指定分类的信息
+			</php>
+			<foreach name="terms" item="vo">
+				<h2> {$vo.name} </h2><!--获取分类名称-->
+				<span>{$vo.description}</span><!--获取分类描述-->
+			</foreach>
+			<foreach name="posts" item="vo" key="key">
+				<php>
+					$smeta=json_decode($vo['smeta'],true);
+				</php>
+			<div class="welcome-grids">
+						<div <if condition="$key eq 1 ">class="col-md-4 wel-grid wow fadeInDownBig animated animated" <elseif condition="$key eq 2 "/>class="col-md-4 wel-grid wow fadeInRight animated animated" <else />class="col-md-4 wel-grid wow fadeInLeft animated animated"</if> data-wow-delay="0.4s">
+						<if condition="$key neq 1 ">
+						<if condition="empty($smeta['thumb'])">
+								<img src="__TMPL__Public/images/default_tupian1.png"  class="img-responsive" alt="{$vo.post_title}"/>
+							<else />
+								<img src="{:sp_get_asset_upload_path($smeta['thumb'])}"  class="img-responsive" alt="{$vo.post_title}"/>
+						</if>
+					<div class="wel-text hvr-shutter-out-horizontal">
+						<h4>{$vo.post_title }</h4><!--调出文章标题-->
+						<p>{$vo.post_content}</p><!--调出文章内容-->
+					</div>
+							<else/>
+							<div class="wel-text hvr-shutter-out-horizontal">
+							<h4>{$vo.post_title }</h4>
+							<p>{$vo.post_content}</p>
+						</div>
+							<!--调出文章缩略图-->
+							<if condition="empty($smeta['thumb'])">
+								<img src="__TMPL__Public/images/default_tupian1.png"  class="img-responsive" alt="{$vo.post_title}"/>
+								<else />
+								<img src="{:sp_get_asset_upload_path($smeta['thumb'])}"  class="img-responsive" alt="{$vo.post_title}"/>
+							</if>
+							<!--调出文章缩略图-->
+							</if>
+						</div>
+					</foreach>
+
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+	</div>
+<div class="services wow bounceIn animated" data-wow-delay="0.4s" style="visibility: visible; -webkit-animation-delay: 0.4s;">
+<php>
+	$posts=sp_sql_posts('cid:7;field:post_title,post_content,smeta ;limit:6;order:listorder asc');//获取分类文章，不分页
+</php>
+<foreach name="posts" item="vo" key="key">
+	<php>
+		$smeta=json_decode($vo['smeta'],true);
+	</php>
+		<div <if condition="$key eq 0">  class="col-md-4 services-grids" <else />class="col-md-4 services-grids wow zoomIn animated"</if>>
+			<div class="flip-effect right">
+				<div class="text-box">
+					<i <if condition="$key eq 0">class="glyphicon glyphicon-user" aria-hidden="true"
+					<elseif condition="$key eq 1"/>class="glyphicon glyphicon-bell" aria-hidden="true"
+					<elseif condition="$key eq 2"/>class="glyphicon glyphicon-wrench" aria-hidden="true"
+					<elseif condition="$key eq 3"/>class="glyphicon glyphicon-home" aria-hidden="true"
+					<elseif condition="$key eq 4"/>class="glyphicon glyphicon-lock" aria-hidden="true"
+					<elseif condition="$key eq 5"/>class="glyphicon glyphicon-shopping-cart" aria-hidden="true"</if>> </i>
+					<h5>{$vo.post_title }</h5>
+					<p>{$vo.post_content}</p>
+				</div>
+				<div class="info-box">
+					<div class="info-content">
+						<!--调出文章缩略图-->
+						<if condition="empty($smeta['thumb'])">
+							<img src="__TMPL__Public/images/default_tupian1.png"  class="img-responsive" alt="{$vo.post_title}"/>
+							<else />
+							<img src="{:sp_get_asset_upload_path($smeta['thumb'])}"  class="img-responsive" alt="{$vo.post_title}"/>
+						</if>
+						<!--调出文章缩略图-->
+					</div>
+				</div>
+			</div>
+</div>
+</foreach>
+		<div class="clearfix"> </div>
+	</div>
+	<div class="capabilities">
+		<div class="container">
+			<h3>Interiors Capabilities</h3>
+			<div class="capabil-grids">
+				<div class="col-md-3 capabil-grid wow fadeInLeft animated animated" data-wow-delay="0.4s">
+					<div class="cap">
+						<div class='numscroller numscroller-big-bottom' data-slno='1' data-min='0' data-max='57000' data-delay='.5' data-increment="100">57000</div>
+					</div>
+					<h5>Happy Clients</h5>
+				</div>
+				<div class="col-md-3 capabil-grid wow fadeInUpBig animated animated" data-wow-delay="0.4s">
+					<div class="cap">
+						<div class='numscroller numscroller-big-bottom' data-slno='1' data-min='0' data-max='1700' data-delay='.5' data-increment="5">1700</div>
+					</div>
+					<h5>Modern design</h5>
+				</div>
+				<div class="col-md-3 capabil-grid wow fadeInDownBig animated animated" data-wow-delay="0.4s">
+					<div class="cap">
+						<div class='numscroller numscroller-big-bottom' data-slno='1' data-min='0' data-max='90000' data-delay='.5' data-increment="100">90000</div>
+					</div>
+					<h5>Followers</h5>
+				</div>
+				<div class="col-md-3 capabil-grid wow fadeInRight animated animated" data-wow-delay="0.4s">
+					<div class="cap">
+						<div class='numscroller numscroller-big-bottom' data-slno='1' data-min='0' data-max='250' data-delay='.5' data-increment="1">250</div>
+					</div>
+					<h5>Awards</h5>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+	</div>
+	<div class="testimonial">
+		<div class="container">
+			<div class="testimonial-grids">
+				<div class="col-md-4 testimonial-grid wow fadeInLeft animated animated" data-wow-delay="0.4s">
+					<h3>见证</h3>
+					<div class="testimonial-info">
+						<php>
+							$posts=sp_sql_posts('cid:8;field:post_title,post_content,post_excerpt,smeta;limit:3;order:listorder asc');//获取分类文章，不分页
+						</php>
+						<foreach name="posts" item="vo">
+							<php>
+								$smeta=json_decode($vo['smeta'],true);
+							</php>
+							<p><span>{$vo.post_excerpt} </span> {$vo.post_content}</p>
+						<h5>{$vo.post_title}</h5>
+							</foreach>
+					</div>
+				</div>
+				<div class="col-md-8 testimonial-grid-right wow fadeInRight animated animated" data-wow-delay="0.4s">
+							<php>
+								$term_ids=9;
+								$posts=sp_sql_posts('cid:9;field:post_title,post_content,post_excerpt,smeta ;limit:3;order:listorder asc');//获取分类文章，不分页
+								$tag="ids:$term_ids;field:description;where:term_id>0;";
+								$terms=sp_get_terms($tag);//获取指定id的分类
+							</php>
+					<foreach name="terms" item="vo">
+					<h3>{$vo.description}</h3><!--分类描述-->
+						</foreach>
+					<div class="works-grids">
+							<foreach name="posts" item="vo">
+								<php>
+									$smeta=json_decode($vo['smeta'],true);
+								</php>
+								<div class="col-md-4 works-grid">
+									<!--文章缩略图-->
+								<if condition="empty($smeta['thumb'])">
+									<img src="__TMPL__Public/images/default_tupian1.png"  class="img-responsive" alt="{$vo.post_title}"/>
+									<else />
+									<img src="{:sp_get_asset_upload_path($smeta['thumb'])}"  class="img-responsive" alt="{$vo.post_title}"/>
+								</if>
+									<!--文章缩略图-->
+							<p>{$vo.post_content}</p><!--文章内容-->
+								</div>
+						</foreach>
+						<div class="clearfix"></div>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+	</div>
+</div>
+<tc_include file="Public:footer"/>
+<tc_include file="Public:scripts"/>
+<script src="__TMPL__Public/assets/js/slippry.min.js"></script>
+<script>
+$(function() {
+	var demo1 = $("#homeslider").slippry({
+		transition: 'fade',
+		useCSS: true,
+		captions: false,
+		speed: 1000,
+		pause: 3000,
+		auto: true,
+		preload: 'visible'
+	});
+});
+</script>
+{:hook('footer_end')}
+</body>
+</html>

@@ -1,0 +1,30 @@
+{:hook('body_start')}
+<div class="header">
+	<ul class="nav_list">
+		<li class="nav_li">
+			<a href="javascript:;" class="btn_nav" id="nav_more"><i class="ic_more png"></i>更多</a>
+			<div class="more_nav" id="more_nav">
+				<!--[if lt IE 9]>
+				<span class="opc_bg"></span>
+				<![endif]-->
+				<i class="ic_bdot png" id="h_bdot"></i>
+				<php>
+					$menu_root_ul_id="main-menu";
+					$filetpl="<a href='\$href' target='\$_blank' class='btn_snav'>\$label</a>";
+					$foldertpl="<a class='btn_snav' href='\$href' target='\$_blank'>\$label</a>";
+					$ul_class="dropdown-menu" ;/*内部ul标签的class属性值*/
+					$li_class="" ;/*内部li标签的class属性值*/
+					$menu_root_ul_class="h_nav";/*菜单根节点ul标签的class属性值*/
+					$showlevel=6;/*显示菜单的层级*/
+					$dropdown='dropdown';/*含有子菜单的li标签的class属性值,用于控制多级菜单的折叠*/
+				</php>
+
+				{:sp_get_menu("main",$menu_root_ul_id,$filetpl,$foldertpl,$ul_class,$li_class,$menu_root_ul_class,$showlevel,$dropdown)}
+
+			</div>
+		</li>
+	</ul>
+
+
+
+</div>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{$site_seo_title} {$site_name}</title>
+	<meta name="keywords" content="{$site_seo_keywords}" />
+	<meta name="description" content="{$site_seo_description}">
+	<tc_include file="Public:head" />
+	<link href="__TMPL__Public/assets/css/slippry/slippry.css" rel="stylesheet">
+	<!---css--->
+	<link href="__TMPL__Public/plus/css/bootstrap.css" rel='stylesheet' type='text/css' />
+	<link href="__TMPL__Public/plus/css/style.css" rel='stylesheet' type='text/css' />
+	<!---css--->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="keywords" content="Interior Plus  Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony Ericsson, Motorola web design" />
+	<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+	<!---js--->
+	<script src="__TMPL__Public/plus/js/jquery-1.11.1.min.js"></script>
+	<script src="__TMPL__Public/plus/js/bootstrap.js"></script>
+	<!---js--->
+	<link href="__TMPL__Public/plus/css/styles.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="__TMPL__Public/plus/css/component.css" />
+	<!--web-fonts-->
+	<link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+	<link href='//fonts.googleapis.com/css?family=Josefin+Sans:400,700italic,700,600italic,600,400italic,300italic,300,100italic,100' rel='stylesheet' type='text/css'>
+	<!--//web-fonts-->
+	<script type="text/javascript" src="__TMPL__Public/plus/js/numscroller-1.0.js"></script>
+	<!--JS for animate-->
+	<link href="__TMPL__Public/plus/css/animate.css" rel="stylesheet" type="text/css" media="all">
+	<script src="__TMPL__Public/plus/js/wow.min.js"></script>
+	<script>
+		new WOW().init();
+	</script>
+	<!--//end-animate-->
+
+</head>
+<body>
+<tc_include file="Public:nav-server" />
+<!---header-->
+<div class="content">
+	<!---about-->
+	<div class="about-section">
+		<div class="container">
+			<php>
+				$posts=sp_sql_posts("cid:$cat_id;field:post_title,post_content,smeta;order:istop desc,listorder desc;limit:1;");
+				$smeta=json_decode($vo['smeta'], true);
+			</php>
+			<foreach name="posts" item="vo" >
+				<php>
+					$smeta=json_decode($vo['smeta'],true);
+				</php>
+			<h2>{:sp_get_term($cat_id)['name']}</h2>
+			<div class="about-grids wow fadeInRight animated animated" data-wow-delay="0.4s">
+				<div class="col-md-8 about-grid">
+					<if condition="empty($smeta['thumb'])">
+						<img src="__TMPL__Public/images/default_tupian1.png"  class="img-responsive" alt="{$vo.post_title}"/>
+						<else />
+						<img src="{:sp_get_asset_upload_path($smeta['thumb'])}"  class="img-responsive" alt="{$vo.post_title}"/>
+					</if>
+				</div>
+				<div class="col-md-4 about-grid1 wow fadeInLeft animated animated" data-wow-delay="0.4s">
+					<foreach name="smeta['photo']" item="vo">
+							<img   class="img-responsive" alt="{$vo.post_title}" src="{:sp_get_asset_upload_path($vo['url'])}" />
+					</foreach>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+
+			<div class="about-at wow fadeInRight animated animated" data-wow-delay="0.4s">
+				<foreach name="posts" item="vo" >
+				<php>
+					$smeta=json_decode($vo['smeta'],true);
+				</php>
+				<h4> {$vo.post_title}</h4>
+				<p>{$vo.post_content}</p>
+			</foreach>
+			</div>
+				</foreach>
+
+		</div>
+	</div>
+    <php>
+        $terms=sp_get_child_terms($term_id);//获取子分类信息
+    </php>
+	<!---about-->
+	<!---team-->
+	<div class="team-section">
+		<div class="container">
+            <h3> Our Team Members</h3>
+            <div class="team-grids">
+                    <foreach name="terms" item="vo" key="key">
+                        <if condition="$key eq 0">
+                        <php>
+                            $term_ids=$vo['term_id'];
+                            $posts=sp_sql_posts("cid:$term_ids;order:listorder asc;");//获取当前分类文章列表
+                        </php>
+                        <foreach name="posts" item="vo" >
+                            <php>
+                                $smeta=json_decode($vo['smeta'],true);
+                            </php>
+                            <div class="col-md-4 team-grid wow fadeInLeft animated animated" data-wow-delay="0.4s">
+                    <div class="ih-item circle effect1"><a href="#">
+						<div class="spinner"></div>
+						<div class="img">
+                            <if condition="empty($smeta['thumb'])">
+                                <img src="__TMPL__Public/images/default_tupian1.png"  alt="{$vo.post_title}"/>
+                                <else />
+                                <img src="{:sp_get_asset_upload_path($smeta['thumb'])}"   alt="{$vo.post_title}"/>
+                            </if>
+                        </div>
+						<div class="info">
+							<div class="info-back">
+								<h4>{$vo.post_title}</h4>
+								<span>{$vo.post_excerpt}</span>
+							</div>
+						</div></a>
+					</div>
+					<p>{$vo.post_content}</p>
+					<div class="social-icons">
+						<a href="#"><i class="icon"></i></a>
+						<a href="#"><i class="icon1"></i></a>
+						<a href="#"><i class="icon2"></i></a>
+						<a href="#"><i class="icon3"></i></a>
+					</div>
+                                </div>
+                            </foreach>
+                        </if>
+                        </foreach>
+				<div class="clearfix"></div>
+			</div>
+
+		</div>
+	</div>
+	<!---team-->
+	<!---Furniture Design-->
+	<div class="furniture">
+		<div class="container">
+			<div class="furniture-grids">
+				<div id="tab" class="col-md-4 furniture-grid wow fadeInRight animated animated" data-wow-delay="0.4s">
+					<h3>Who we are</h3>
+                    <foreach name="terms" item="vo" key="key">
+                        <if condition="$key eq 1">
+                            <php>
+                                $term_ids=$vo['term_id'];
+                                $posts=sp_sql_posts("cid:$term_ids;order:listorder asc;");//获取当前分类文章列表
+                            </php>
+                            <foreach name="posts" item="vo" >
+                                <php>
+                                    $smeta=json_decode($vo['smeta'],true);
+                                </php>
+					<div>
+						<ul class="place">
+							<li><img src="__TMPL__/Public/plus/images/cir.png" alt=""></li>
+							<li>{$vo.post_title}</li>
+						</ul>
+						<p>{$vo.post_content}</p>
+					</div>
+                                </foreach></if></foreach>
+                    <script>
+                        var objs=document.getElementById("tab").getElementsByTagName("div");
+                        for(var i=0;i<objs.length;i++)
+                        {
+                            objs[i].id="tab" + i;
+                        }
+                    </script>
+                    <!--script-->
+					<script>
+						$(document).ready(function(){
+							$(".tab0 p").hide();
+							$(".tab1 p").hide();
+							$(".tab2 p").hide();
+							$(".tab3 p").hide();
+							$(".tab0 ul").click(function(){
+								$(".tab0 p").slideToggle(300);
+								$(".tab1 p").hide();
+								$(".tab2 p").hide();
+								$(".tab3 p").hide();
+							})
+							$(".tab1 ul").click(function(){
+								$(".tab1 p").slideToggle(300);
+								$(".tab0 p").hide();
+								$(".tab2 p").hide();
+								$(".tab3 p").hide();
+							})
+							$(".tab2 ul").click(function(){
+								$(".tab2 p").slideToggle(300);
+								$(".tab3 p").hide();
+								$(".tab1 p").hide();
+								$(".tab0 p").hide();
+							})
+							$(".tab3 ul").click(function(){
+								$(".tab3 p").slideToggle(300);
+								$(".tab2 p").hide();
+								$(".tab1 p").hide();
+								$(".tab0 p").hide();
+							})
+						});
+					</script>
+					<!-- script -->
+                </div>
+				<div class="col-md-8 furniture-grid1 wow fadeInLeft animated animated" data-wow-delay="0.4s">
+					<h3>Furniture Design</h3>
+                    <foreach name="terms" item="vo" key="key">
+                        <if condition="$key eq 2">
+                            <php>
+                                $term_ids=$vo['term_id'];
+                                $posts=sp_sql_posts("cid:$term_ids;order:listorder asc;");//获取当前分类文章列表
+                            </php>
+                            <foreach name="posts" item="vo" >
+                                <php>
+                                    $smeta=json_decode($vo['smeta'],true);
+                                </php>
+                    <div class="fur-img">
+                        <if condition="empty($smeta['thumb'])">
+                            <img src="__TMPL__Public/images/default_tupian1.png"  alt="{$vo.post_title}"/>
+                            <else />
+                            <img src="{:sp_get_asset_upload_path($smeta['thumb'])}" class="img-responsive"  alt="{$vo.post_title}"/>
+                        </if>					</div>
+                                </foreach></if></foreach>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!---Standards-->
+</div>
+<tc_include file="Public:footer"/>
+<tc_include file="Public:scripts"/>
+</body>
+</html>

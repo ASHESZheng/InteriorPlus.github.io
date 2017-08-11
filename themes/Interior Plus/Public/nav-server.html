@@ -1,0 +1,58 @@
+{:hook('body_start')}
+<php>
+    $home_slides=sp_getslide("portal_index");
+</php>
+
+<foreach name="home_slides" item="vo">
+<style>
+    .header{
+    background: url( "{:sp_get_asset_upload_path($vo['slide_pic'])}" ) no-repeat 0px 0px;
+    width:100%;
+    background-size:cover;
+    min-height:832px;
+    display:block;
+}</style>
+	<div class="header head">
+		<div class="container">
+			<div class="heder-top">
+				<div class="logo wow fadeInDownBig animated animated" data-wow-delay="0.4s">
+					<h1><a href="{$vo.slide_url}">{$vo.slide_name}</a></h1>
+				</div>
+				<div class="nav-icon">
+					<a href="#" class="navicon"></a>
+					<div class="toggle">
+						<php>
+							$menu_root_ul_id="main-menu";
+							$filetpl="<a href='\$href' target='\$target'>\$label</a>";
+							$foldertpl="<a class='dropdown-toggle' href='\$href' target='\$target'>\$label</a>";
+							$ul_class="toggle-menu" ;/*内部ul标签的class属性值*/
+							$li_class="" ;/*内部li标签的class属性值*/
+							$menu_root_ul_class="toggle-menu";/*菜单根节点ul标签的class属性值*/
+							$showlevel=6;/*显示菜单的层级*/
+							$dropdown='dropdown';/*含有子菜单的li标签的class属性值,用于控制多级菜单的折叠*/
+						</php>
+
+						{:sp_get_menu("main",$menu_root_ul_id,$filetpl,$foldertpl,$ul_class,$li_class,$menu_root_ul_class,$showlevel,$dropdown)}
+
+						<!--<ul class="toggle-menu">-->
+							<!--<li><a href="index.html">Home</a></li>-->
+							<!--<li><a  href="about.html">About</a></li>-->
+							<!--<li><a class="active"  href="services.html">Services</a></li>-->
+							<!--<li><a  href="gallery.html">Gallery</a></li>-->
+							<!--<li><a  href="codes.html">Codes</a></li>-->
+							<!--<li><a  href="contact.html">Contact</a></li>-->
+						<!--</ul>-->
+					</div>
+					<script>
+						$('.navicon').on('click', function (e) {
+							e.preventDefault();
+							$(this).toggleClass('navicon--active');
+							$('.toggle').toggleClass('toggle--active');
+						});
+					</script>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+	</div>
+</foreach>
