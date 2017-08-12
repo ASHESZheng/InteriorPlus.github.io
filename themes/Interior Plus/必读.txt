@@ -1,1 +1,0 @@
-将数据库文winetr件导入数据库phpadmin，修改数据库配置文件data/conf/db.php,将数据库名改为改数据库名。
